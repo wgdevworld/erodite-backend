@@ -14,6 +14,7 @@ export const userTypeDefs = gql`
   }
 
   extend type Query {
-    getUser(id: ID!): User
+    getUserById(id: ID!): User
+    getUser: User
   }
 `;
