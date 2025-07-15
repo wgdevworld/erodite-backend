@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import admin from "firebase-admin";
 import { AuthenticatedRequest } from "../types/store";
+import serviceAccount from "../../firebaseServiceAccount.json";
 
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
 });
 
 export const authenticate: RequestHandler = async (req, res, next) => {
