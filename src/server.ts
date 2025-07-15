@@ -7,22 +7,21 @@ import { resolvers } from "./schema/resolvers";
 import { authenticate } from "./middleware/auth";
 import { AuthenticatedRequest, GraphQLContext } from "./types/store";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { buildContext } from "./context";
 
 dotenv.config();
 
 export async function startServer() {
   const app = express();
   app.use(cors());
-  if (process.env.ENV !== "development") {
-    app.use(authenticate);
-  }
+  // if (process.env.ENV !== "development") {
+  app.use(authenticate);
+  // }
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }: { req: AuthenticatedRequest }): GraphQLContext => ({
-      uid: req.uid,
-    }),
+    context: buildContext,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
     debug: true,
     formatError: (error) => {
@@ -41,11 +40,6 @@ export async function startServer() {
       `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
     )
   );
-
-  app.use((req, res, next) => {
-    console.log(req.method, req.hostname, req.path);
-    next();
-  });
 }
 
 startServer().catch((err) => {
