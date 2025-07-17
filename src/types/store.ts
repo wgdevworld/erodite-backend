@@ -6,5 +6,5 @@ export interface AuthenticatedRequest extends Request {
 }
 
 export interface GraphQLContext {
-  user: User;
+  user: User | null;
 }

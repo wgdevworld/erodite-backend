@@ -17,7 +17,7 @@ export const buildContext = async ({
       where: { firebaseUid: decoded.uid },
     });
 
-    return user ? { user } : null;
+    return user ? { user } : { user: null };
   } catch {
     return null;
   }
