@@ -11,6 +11,7 @@ export const userTypeDefs = gql`
 
   extend type Mutation {
     createUser(email: String!, firebaseUid: String!): User!
+    getOrCreateUser(email: String!, firebaseUid: String!): User!
   }
 
   extend type Query {
