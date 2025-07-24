@@ -8,7 +8,7 @@ export const userMutations = {
     ctx: GraphQLContext
   ) => {
     const user = await prisma.user.create({
-      data: {
+      data: { 
         email: args.email,
         firebaseUid: args.firebaseUid,
       },

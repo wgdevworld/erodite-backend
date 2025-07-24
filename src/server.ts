@@ -8,6 +8,7 @@ import { authenticate } from "./middleware/auth";
 import { AuthenticatedRequest, GraphQLContext } from "./types/store";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { buildContext } from "./context";
+import { queryLoggerExtension } from "./middleware/logger";
 
 dotenv.config();
 
@@ -22,7 +23,10 @@ export async function startServer() {
     typeDefs,
     resolvers,
     context: buildContext,
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
+    plugins: [
+      ApolloServerPluginLandingPageGraphQLPlayground,
+      queryLoggerExtension,
+    ],
     debug: true,
     formatError: (error) => {
       console.log("[🚨 GraphQL Error]", error);
